@@ -29,6 +29,8 @@ generator client {
 // }
 //
 // For now, we just have to get *both sides* when fetching from the DB and smoosh them together :(
+// This discussion also sounds like a possible, eventual solution:
+// https://github.com/prisma/prisma/issues/3939
 
 model Person {
   id                 Int            @id @default(autoincrement())
