@@ -25,11 +25,9 @@ jobs:
           yarn --version
           
       - name: Install using lockfile
-        uses: borales/actions-yarn@v3.2.0
         run: yarn install --frozen-lockfile
         
       - name: Run Jest Tests
-        uses: borales/actions-yarn@v3.2.0
         run: yarn rw test
         env:
           CI: true
