@@ -1,0 +1,31 @@
+name: CI/Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container: node:16.14-alpine3.14
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Node and Yarn Versions
+        run: |
+          node --version
+          yarn --version
+
+      - name: Install using lockfile
+        run: yarn install
+        env:
+          CI: true
+
+      - name: Run Jest Tests
+        run: yarn rw test
+        env:
+          CI: true
