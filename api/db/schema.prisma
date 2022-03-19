@@ -8,11 +8,43 @@ generator client {
   binaryTargets = "native"
 }
 
-// Define your own datamodels here and run `yarn redwood prisma migrate dev`
-// to create migrations for them and apply to your dev DB.
-// TODO: Please remove the following example:
-model UserExample {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+// https://stackoverflow.com/questions/61260181/prisma-schema-create-a-relation-field-from-multiple-possible-foreign-keys-or
+// Modeling a graph looks a little weird in prism right now since you have to model *both sides* of the
+// relationships.
+// Ideally we could do something like this
+// model Person {
+//   id                 Int            @id @default(autoincrement())
+//   firstName          String
+//   lastName           String
+//   createdAt          DateTime       @default(now())
+//   relationships      Relationship[] @relation(fields: [id], references: [id])
+// }
+// model Relationship {
+//   id      Int    @id @default(autoincrement())
+//   leftId  Int
+//   left    Person @relation(fields: [leftId], references: [id])
+//   rightId Int
+//   right   Person @relation( fields: [rightId], references: [id])
+//   @@unique([leftId, rightId])
+// }
+//
+// For now, we just have to get *both sides* when fetching from the DB and smoosh them together :(
+
+model Person {
+  id                 Int            @id @default(autoincrement())
+  firstName          String
+  lastName           String
+  createdAt          DateTime       @default(now())
+  relationshipsLeft  Relationship[] @relation("Person1")
+  relationshipsRight Relationship[] @relation("Person2")
+}
+
+model Relationship {
+  id      Int    @id @default(autoincrement())
+  leftId  Int
+  left    Person @relation("Person1", fields: [leftId], references: [id])
+  rightId Int
+  right   Person @relation("Person2", fields: [rightId], references: [id])
+
+  @@unique([leftId, rightId])
 }
