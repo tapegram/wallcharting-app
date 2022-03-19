@@ -9,12 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16.x]
     
-    container: node:${{ matrix.node-version }}
+    container: node:16.14-alpine3.14
         
     steps:
       - uses: actions/checkout@v2
