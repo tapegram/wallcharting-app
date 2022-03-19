@@ -21,7 +21,7 @@ jobs:
           yarn --version
           
       - name: Install using lockfile
-        run: yarn install --immutable --immutable-cache
+        run: yarn install --immutable --immutable-cache --check-cache
         
       - name: Run Jest Tests
         run: yarn rw test
