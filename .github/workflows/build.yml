@@ -9,9 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     container: node:16.14-alpine3.14
-        
+
     steps:
       - uses: actions/checkout@v2
 
@@ -19,12 +19,12 @@ jobs:
         run: |
           node --version
           yarn --version
-          
+
       - name: Install using lockfile
-        run: yarn install --immutable --immutable-cache --check-cache
+        run: yarn install
         env:
           CI: true
-        
+
       - name: Run Jest Tests
         run: yarn rw test
         env:
