@@ -22,7 +22,7 @@
     "seed": "yarn rw exec seed"
   },
   "packageManager": "yarn@3.2.0",
-  "resolutions": {
-    "apollo-server-core": "2.18.2"
+  "installConfig": {
+    "pnp": true
   }
 }

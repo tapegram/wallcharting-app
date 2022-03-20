@@ -1,4 +1,5 @@
 import { Link, routes } from '@redwoodjs/router'
+import RelationshipsCell from 'src/components/RelationshipsCell'
 
 const Profile = ({ profile }) => {
   return (
@@ -9,6 +10,7 @@ const Profile = ({ profile }) => {
           </Link>
         </h2>
         <div>Created at: {profile.createdAt}</div>
+        <RelationshipsCell personId={profile.id} />
     </>
   )
 }

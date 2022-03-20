@@ -19,6 +19,7 @@ export const schema = gql`
   type Query {
     people: [Person!]! @requireAuth
     person(id: Int!): Person @requireAuth
+    relationships(personId: Int!): [Person!]! @requireAuth
   }
 
   input CreatePersonInput {

@@ -3,6 +3,16 @@ import type { ResolverArgs } from '@redwoodjs/graphql-server'
 
 import { db } from 'src/lib/db'
 
+export const relationships = async ({ id }) => {
+  const person = db.person.findUnique({
+    where: { id },
+  })
+  const leftRelationships = person.relationshipsLeft.map(relationship => { relationship.right })
+  const rightRelationships = person.relationshipsRight.map(relationship => { relationship.left })
+
+  return [...leftRelationships, ...rightRelationships]
+}
+
 export const people = () => {
   return db.person.findMany()
 }
