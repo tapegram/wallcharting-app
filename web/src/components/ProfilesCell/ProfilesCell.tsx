@@ -1,10 +1,10 @@
-import type { FindPeople } from 'types/graphql'
+import type { ProfilesQuery } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 
 export const QUERY = gql`
   query ProfilesQuery {
-    people {
+    profiles: people {
       id
       firstName
       lastName
@@ -21,12 +21,21 @@ export const Failure = ({ error }: CellFailureProps) => (
   <div style={{ color: 'red' }}>Error: {error.message}</div>
 )
 
-export const Success = ({ people }: CellSuccessProps<FindPeople>) => {
+export const Success = ({ profiles }: CellSuccessProps<ProfilesQuery>) => {
   return (
-    <ul>
-      {people.map((item) => {
-        return <li key={item.id}>{JSON.stringify(item)}</li>
+    <>
+      {profiles.map((profile) => {
+        return <div key={profile.id}>
+          {console.log(profile)}
+          <header>
+            <h2>{profile.lastName}, {profile.firstName}</h2>
+          </header>
+          <body>
+            <p>{profile.lastName}, {profile.firstName}</p>
+            <div>Created at: {profile.createdAt}</div>
+          </body>
+        </div>
       })}
-    </ul>
+    </>
   )
 }
