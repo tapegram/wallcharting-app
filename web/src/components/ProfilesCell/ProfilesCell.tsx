@@ -1,5 +1,6 @@
 import type { ProfilesQuery } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import { Link, routes } from '@redwoodjs/router'
 
 
 export const QUERY = gql`
@@ -28,10 +29,14 @@ export const Success = ({ profiles }: CellSuccessProps<ProfilesQuery>) => {
         return <div key={profile.id}>
           {console.log(profile)}
           <header>
-            <h2>{profile.lastName}, {profile.firstName}</h2>
+            <h2>
+              <Link to={routes.profile()}>
+                {profile.lastName}, {profile.firstName}
+              </Link>
+            </h2>
           </header>
+
           <body>
-            <p>{profile.lastName}, {profile.firstName}</p>
             <div>Created at: {profile.createdAt}</div>
           </body>
         </div>
