@@ -13,13 +13,13 @@ import PeopleLayout from 'src/layouts/PeopleLayout'
 const Routes = () => {
   return (
     <Router>
-      <Route path="/profile" page={ProfilePage} name="profile" />
       <Set wrap={PeopleLayout}>
         <Route path="/people/new" page={PersonNewPersonPage} name="newPerson" />
         <Route path="/people/{id:Int}/edit" page={PersonEditPersonPage} name="editPerson" />
         <Route path="/people/{id:Int}" page={PersonPersonPage} name="person" />
         <Route path="/people" page={PersonPeoplePage} name="people" />
       </Set>
+      <Route path="/profile/{id:Int}" page={ProfilePage} name="profile" />
       <Route path="/" page={HomePage} name="home" />
       <Route notfound page={NotFoundPage} />
     </Router>
