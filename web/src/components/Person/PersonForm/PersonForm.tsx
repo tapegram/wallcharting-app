@@ -7,18 +7,8 @@ import {
   Submit,
 } from '@redwoodjs/forms'
 
-
-
 const PersonForm = (props) => {
   const onSubmit = (data) => {
-
-  
-    
-    
-  
-    
-    
-  
     props.onSave(data, props?.person?.id)
   }
 
@@ -31,7 +21,7 @@ const PersonForm = (props) => {
           titleClassName="rw-form-error-title"
           listClassName="rw-form-error-list"
         />
-      
+
         <Label
           name="firstName"
           className="rw-label"
@@ -39,7 +29,7 @@ const PersonForm = (props) => {
         >
           First name
         </Label>
-        
+
           <TextField
             name="firstName"
             defaultValue={props.person?.firstName}
@@ -47,7 +37,7 @@ const PersonForm = (props) => {
             errorClassName="rw-input rw-input-error"
             validation={{ required: true }}
           />
-        
+
 
         <FieldError name="firstName" className="rw-field-error" />
 
@@ -58,7 +48,7 @@ const PersonForm = (props) => {
         >
           Last name
         </Label>
-        
+
           <TextField
             name="lastName"
             defaultValue={props.person?.lastName}
@@ -66,7 +56,7 @@ const PersonForm = (props) => {
             errorClassName="rw-input rw-input-error"
             validation={{ required: true }}
           />
-        
+
 
         <FieldError name="lastName" className="rw-field-error" />
 
