@@ -11,11 +11,11 @@ export const relationships = async ({ id }: Prisma.RelationshipWhereUniqueInput)
   // // const rightRelationships = person.relationshipsRight?.map(relationship => { relationship.left })
 
   // return leftRelationships.conacat(rightRelationships)
-  const relationships = await db.relationship.findMany({ where: { leftId: id }})
-  const lefts = relationships.map((relationship) => relationship.rightId)
-  const rights = relationships.map((relationship) => relationship.leftId)
-  console.log(lefts.concat(rights))
-  return lefts.concat(rights)
+  return db.relationship.findMany({ where: { leftId: id }})
+  // const lefts = relationships.map((relationship) => relationship.right)
+  // const rights = relationships.map((relationship) => relationship.left)
+  // console.log(lefts.concat(rights))
+  // return [{ relationships: lefts.concat(rights) }]
 }
 
 export const createRelationship = ({ input }: CreateRelationshipArgs) => {
@@ -69,3 +69,15 @@ export const Person = {
     { root }: ResolverArgs<ReturnType<typeof person>>
   ) => db.person.findUnique({ where: { id: root.id } }).relationshipsRight(),
 }
+
+export const Relationship = {
+  left: (
+    _obj,
+    { root }: ResolverArgs<ReturnType<typeof person>>
+  ) => db.relationship.findUnique({ where: { id: root.id } }).left(),
+  right: (
+    _obj,
+    { root }: ResolverArgs<ReturnType<typeof person>>
+  ) => db.relationship.findUnique({ where: { id: root.id } }).right(),
+}
+
