@@ -18,6 +18,10 @@ export const relationships = async ({ id }: Prisma.RelationshipWhereUniqueInput)
   return lefts.concat(rights)
 }
 
+export const createRelationship = ({ input }: CreateRelationshipArgs) => {
+  return db.relationship.create({ data: input })
+}
+
 export const people = () => {
   return db.person.findMany()
 }
