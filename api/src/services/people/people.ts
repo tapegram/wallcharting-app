@@ -3,14 +3,19 @@ import type { ResolverArgs } from '@redwoodjs/graphql-server'
 
 import { db } from 'src/lib/db'
 
-export const relationships = async ({ id }) => {
-  const person = db.person.findUnique({
-    where: { id },
-  })
-  const leftRelationships = person.relationshipsLeft.map(relationship => { relationship.right })
-  const rightRelationships = person.relationshipsRight.map(relationship => { relationship.left })
+export const relationships = async ({ id }: Prisma.RelationshipWhereUniqueInput) => {
+  // const person = db.person.findUnique({
+  //   where: { id },
+  // })
+  // const leftRelationships = person.relationshipsLeft ? person.relationshipsLeft.map(relationship => { relationship.right }) : []
+  // // const rightRelationships = person.relationshipsRight?.map(relationship => { relationship.left })
 
-  return [...leftRelationships, ...rightRelationships]
+  // return leftRelationships.conacat(rightRelationships)
+  const relationships = await db.relationship.findMany({ where: { leftId: id }})
+  const lefts = relationships.map((relationship) => relationship.rightId)
+  const rights = relationships.map((relationship) => relationship.leftId)
+  console.log(lefts.concat(rights))
+  return lefts.concat(rights)
 }
 
 export const people = () => {

@@ -3,8 +3,8 @@ import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 
 export const QUERY = gql`
-  query RelationshipsQuery {
-    relationships {
+  query RelationshipsQuery($personId: Int!) {
+    relationships(personId: $personId) {
       id
     }
   }
