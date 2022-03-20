@@ -8,7 +8,7 @@ import Profile from './Profile'
 describe('Profile', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<Profile />)
+      render(<Profile profile={{id: 1, firstName: "Tavish", lastName: "Pegram"}}/>)
     }).not.toThrow()
   })
 })
