@@ -5,7 +5,7 @@ const Profile = ({ profile }) => {
     <div>
         <header>
           <h2>
-            <Link to={routes.profile({ id: profile.id.toString() })}>
+            <Link to={routes.profile({ id: profile.id })}>
               {profile.lastName}, {profile.firstName}
             </Link>
           </h2>
