@@ -1,6 +1,6 @@
 import type { RelationshipsQuery } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
-import PersonCell from 'src/components/Person/PersonCell'
+import { Link, routes } from '@redwoodjs/router'
 
 
 export const QUERY = gql`
@@ -8,7 +8,17 @@ export const QUERY = gql`
     relationships(personId: $personId) {
       id
       leftId
+      left {
+        id
+        firstName
+        lastName
+      }
       rightId
+      right {
+        id
+        firstName
+        lastName
+      }
     }
   }
 `
@@ -26,8 +36,14 @@ export const Success = ({ personId, relationships }: CellSuccessProps<Relationsh
     <>
       <h2>Relationships</h2>
       <ul>
-        {console.log(aggregateRelationships(personId, relationships)) || aggregateRelationships(personId, relationships).map((id) => {
-          return <PersonCell key={id} id={id} />
+        {aggregateRelationships(personId, relationships).map((person) => {
+          return <div key={person.id}>
+            <h3>
+              <Link to={routes.profile({ id: person.id })}>
+                {person.lastName}, {person.firstName}
+              </Link>
+            </h3>
+          </div>
         })}
       </ul>
     </>
@@ -39,9 +55,9 @@ export const Success = ({ personId, relationships }: CellSuccessProps<Relationsh
 const aggregateRelationships = (id, relationships) => {
   return relationships.map((relationship) => {
     if (relationship.leftId === id) {
-      return relationship.rightId
+      return relationship.right
     } else {
-      return relationship.leftId
+      return relationship.left
     }
   })
 }
