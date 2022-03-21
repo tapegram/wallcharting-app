@@ -47,6 +47,4 @@ model Relationship {
   left    Person @relation("Person1", fields: [leftId], references: [id])
   rightId Int
   right   Person @relation("Person2", fields: [rightId], references: [id])
-
-  @@unique([leftId, rightId])
 }

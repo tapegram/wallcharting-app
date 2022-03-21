@@ -3,6 +3,14 @@ import type { ResolverArgs } from '@redwoodjs/graphql-server'
 
 import { db } from 'src/lib/db'
 
+export const relationships = async ({ id }: Prisma.RelationshipWhereUniqueInput) => {
+  return (await db.relationship.findMany({ where: { leftId: id }}))
+}
+
+export const createRelationship = ({ input }: CreateRelationshipArgs) => {
+  return db.relationship.create({ data: input })
+}
+
 export const people = () => {
   return db.person.findMany()
 }
@@ -50,3 +58,15 @@ export const Person = {
     { root }: ResolverArgs<ReturnType<typeof person>>
   ) => db.person.findUnique({ where: { id: root.id } }).relationshipsRight(),
 }
+
+export const Relationship = {
+  left: (
+    _obj,
+    { root }: ResolverArgs<ReturnType<typeof person>>
+  ) => db.relationship.findUnique({ where: { id: root.id } }).left(),
+  right: (
+    _obj,
+    { root }: ResolverArgs<ReturnType<typeof person>>
+  ) => db.relationship.findUnique({ where: { id: root.id } }).right(),
+}
+

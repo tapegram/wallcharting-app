@@ -19,6 +19,7 @@ export const schema = gql`
   type Query {
     people: [Person!]! @requireAuth
     person(id: Int!): Person @requireAuth
+    relationships(personId: Int!): [Relationship!]! @requireAuth
   }
 
   input CreatePersonInput {
@@ -31,9 +32,15 @@ export const schema = gql`
     lastName: String
   }
 
+  input CreateRelationshipInput {
+    leftId: Int!
+    rightId: Int!
+  }
+
   type Mutation {
     createPerson(input: CreatePersonInput!): Person! @requireAuth
     updatePerson(id: Int!, input: UpdatePersonInput!): Person! @requireAuth
     deletePerson(id: Int!): Person! @requireAuth
+    createRelationship(input: CreateRelationshipInput!): Relationship! @requireAuth
   }
 `
