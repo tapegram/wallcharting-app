@@ -52,6 +52,7 @@ export const Success = ({ personId, relationships }: CellSuccessProps<Relationsh
 
 // We dont know if the current user is on the left or right, so this just
 // grabs the "other" user
+// filters duplicates
 const aggregateRelationships = (id, relationships) => {
   return relationships.map((relationship) => {
     if (relationship.leftId === id) {
