@@ -42,8 +42,11 @@ describe('CreateRelationshipForPersonFormCell', () => {
     expect(() => {
       render(
         <Success
-          createRelationshipForPersonForm={
-            standard().createRelationshipForPersonForm
+          personId={
+            standard().createRelationshipForPersonForm.personId
+          }
+          people={
+            standard().createRelationshipForPersonForm.people
           }
         />
       )
