@@ -6,6 +6,8 @@ import {
   Submit,
 } from '@redwoodjs/forms'
 import { useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
+import { Toaster } from '@redwoodjs/web/toast'
 
 const CREATE = gql`
   mutation CreateRelationshipMutation($input: CreateRelationshipInput!) {
@@ -28,7 +30,14 @@ const CREATE = gql`
 `
 
 const RelationshipForm = ({ personId, people }) => {
-  const [createRelationship, { loading, error }] = useMutation(CREATE)
+  const [createRelationship, { loading, error }] = useMutation(CREATE, {
+    onCompleted: () => {
+      toast.success('Relationship created!')
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+  })
   const onSubmit = (input) => {
     console.log(input.person)
     console.log(personId)
@@ -43,6 +52,7 @@ const RelationshipForm = ({ personId, people }) => {
 
   return (
     <div>
+      <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
       <h3>Add Relationship</h3>
       <Form onSubmit={onSubmit}>
         <FormError
