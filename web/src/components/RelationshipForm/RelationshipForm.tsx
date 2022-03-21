@@ -8,6 +8,7 @@ import {
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 import { Toaster } from '@redwoodjs/web/toast'
+import { QUERY as RelationshipsQuery } from 'src/components/RelationshipsCell'
 
 const CREATE = gql`
   mutation CreateRelationshipMutation($input: CreateRelationshipInput!) {
@@ -37,10 +38,9 @@ const RelationshipForm = ({ personId, people }) => {
     onError: (error) => {
       toast.error(error.message)
     },
+    refetchQueries: [{ query: RelationshipsQuery, variables: { personId } }],
   })
   const onSubmit = (input) => {
-    console.log(input.person)
-    console.log(personId)
     createRelationship({ variables: {
       input: {
         leftId: personId,
