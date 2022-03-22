@@ -1,6 +1,7 @@
 import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import ProfilesCell from 'src/components/ProfilesCell'
+import ForceGraphCell from 'src/components/ForceGraphCell'
 
 const HomePage = () => {
   return (
@@ -16,6 +17,7 @@ const HomePage = () => {
         <Link to={routes.home()}>Home</Link>`
       </p>
       <ProfilesCell />
+      <ForceGraphCell />
     </>
   )
 }
