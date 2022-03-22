@@ -27,6 +27,6 @@ export const Failure = ({ error }: CellFailureProps) => (
 export const Success = ({ relationshipsGraph }: CellSuccessProps<ForceGraphQuery>) => {
   return <div>
     {JSON.stringify(relationshipsGraph)}
-    <ForceGraph />
+    <ForceGraph nodes={relationshipsGraph.nodes} edges={relationshipsGraph.edges}/>
   </div>
 }

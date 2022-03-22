@@ -1,34 +1,20 @@
 import { Graph } from "react-d3-graph";
 
-const ForceGraph = () => {
+const ForceGraph = ({ nodes, edges}) => {
   const state = {
     data: {
-      nodes: [
-        { id: "query", type: "query", color: "#FBc879" },
-        { id: "hmrc_united_kingdom", type: "authority", color: "#ff0076" },
-        { id: "united_kingdom_hm_revenue_and_customs", type: "authority" },
-        { id: "united_kingdom", type: "countries" },
-        { id: "customs_and_excise_l1", type: "lc-l1" },
-        { id: "customs_and_excise_l2", type: "lc-l2" },
-        { id: "international_trade", type: "lc-l1", color: "#ff0076" }
-      ],
-      links: [
-        { source: "customs_and_excise_l2", target: "international_trade" },
-        { source: "query", target: "hmrc_united_kingdom" },
-        { source: "query", target: "united_kingdom_hm_revenue_and_customs" },
-        { source: "query", target: "united_kingdom" },
-        { source: "query", target: "customs_and_excise_l1" },
-        { source: "query", target: "customs_and_excise_l2" }
-      ]
+      nodes: nodes,
+      links: edges.map((edge) => ({ source: edge.leftId, target: edge.rightId })),
     },
     config: {
-      collapsible: true,
-      nodeHighlightBehavior: true,
+      collapsible: false,
+      nodeHighlightBehavior: false,
       node: {
         color: "blue",
         size: 250,
         fontSize: 12,
-        highlightStrokeColor: "blue"
+        highlightStrokeColor: "blue",
+        labelProperty: "label",
       },
       link: {
         highlightColor: "lightblue"

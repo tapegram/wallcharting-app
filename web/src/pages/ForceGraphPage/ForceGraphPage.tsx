@@ -7,7 +7,7 @@ const ForceGraphPage = () => {
       <MetaTags title="ForceGraph" description="ForceGraph page" />
 
       <h1>ForceGraphPage</h1>
-      <ForceGraph />
+      {/* <ForceGraph /> */}
     </>
   )
 }
