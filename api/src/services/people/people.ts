@@ -3,6 +3,53 @@ import type { ResolverArgs } from '@redwoodjs/graphql-server'
 
 import { db } from 'src/lib/db'
 
+export const relationshipsGraph = async () => {
+  const relationships = await db.relationship.findMany({
+    include: {
+      left: true,
+      right: true,
+    },
+  })
+
+  const nodes = getNodes(relationships)
+  const edges = getEdges(relationships)
+
+  return { nodes, edges }
+}
+
+const getNodes = (relationships) => {
+  const nodes = []
+  relationships.forEach((relationship) => {
+    nodes.push({
+      id: relationship.left.id,
+      label: relationship.left.firstName,
+    })
+    nodes.push({
+      id: relationship.right.id,
+      label: relationship.right.firstName,
+    })
+  })
+  return uniqBy(nodes, JSON.stringify)
+}
+
+const getEdges = (relationships) => {
+  const edges = relationships.map((relationship) => {
+    const leftId = Math.min(relationship.left.id, relationship.right.id)
+    const rightId = Math.max(relationship.left.id, relationship.right.id)
+    return {leftId, rightId}
+  })
+
+  return uniqBy(edges, JSON.stringify)
+}
+
+const uniqBy = (a, key) => {
+  var seen = {};
+  return a.filter(function(item) {
+      var k = key(item);
+      return seen.hasOwnProperty(k) ? false : (seen[k] = true);
+  })
+}
+
 export const relationships = async ({ id }: Prisma.RelationshipWhereUniqueInput) => {
   return (await db.relationship.findMany({ where: { leftId: id }}))
 }
