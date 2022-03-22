@@ -20,6 +20,22 @@ export const schema = gql`
     people: [Person!]! @requireAuth
     person(id: Int!): Person @requireAuth
     relationships(personId: Int!): [Relationship!]! @requireAuth
+    relationshipsGraph: Graph! @requireAuth
+  }
+
+  type Graph {
+    nodes: [Node!]!
+    edges: [Edge!]!
+  }
+
+  type Node {
+    id: Int!
+    label: String!
+  }
+
+  type Edge {
+    leftId: Int!
+    rightId: Int!
   }
 
   input CreatePersonInput {
