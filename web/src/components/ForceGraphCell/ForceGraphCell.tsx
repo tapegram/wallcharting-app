@@ -1,5 +1,6 @@
 import type { ForceGraphQuery } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import ForceGraph from 'src/components/ForceGraph/ForceGraph'
 
 export const QUERY = gql`
   query ForceGraphQuery {
@@ -24,5 +25,8 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = ({ relationshipsGraph }: CellSuccessProps<ForceGraphQuery>) => {
-  return <div>{JSON.stringify(relationshipsGraph)}</div>
+  return <div>
+    {JSON.stringify(relationshipsGraph)}
+    <ForceGraph />
+  </div>
 }
