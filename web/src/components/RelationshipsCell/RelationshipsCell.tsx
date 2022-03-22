@@ -54,11 +54,19 @@ export const Success = ({ personId, relationships }: CellSuccessProps<Relationsh
 // grabs the "other" user
 // filters duplicates
 const aggregateRelationships = (id, relationships) => {
-  return relationships.map((relationship) => {
+  return uniqBy(relationships.map((relationship) => {
     if (relationship.leftId === id) {
       return relationship.right
     } else {
       return relationship.left
     }
+  }), JSON.stringify)
+}
+
+const uniqBy = (a, key) => {
+  var seen = {};
+  return a.filter(function(item) {
+      var k = key(item);
+      return seen.hasOwnProperty(k) ? false : (seen[k] = true);
   })
 }

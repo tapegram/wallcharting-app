@@ -22,7 +22,7 @@ export const Failure = ({ error }: CellFailureProps) => (
   <div style={{ color: 'red' }}>Error: {error.message}</div>
 )
 
-export const Success = ({ profiles }): CellSuccessProps<ProfilesQuery> => {
+export const Success = ({ profiles }) => {
   return profiles.map((profile) => (
       <Profile key={profile.id} profile={profile} />
   ))
