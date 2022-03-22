@@ -51,7 +51,9 @@ const uniqBy = (a, key) => {
 }
 
 export const relationships = async ({ id }: Prisma.RelationshipWhereUniqueInput) => {
-  return (await db.relationship.findMany({ where: { leftId: id }}))
+  const lefts = await db.relationship.findMany({ where: { leftId: id }})
+  const rights = await db.relationship.findMany({ where: { rightId: id }})
+  return uniqBy([...lefts, ...rights], JSON.stringify)
 }
 
 export const createRelationship = ({ input }: CreateRelationshipArgs) => {
