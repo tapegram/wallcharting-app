@@ -1,4 +1,5 @@
 import type { Prisma } from '@prisma/client'
+import { validate } from '@redwoodjs/api'
 import type { ResolverArgs } from '@redwoodjs/graphql-server'
 
 import { db } from 'src/lib/db'
@@ -56,7 +57,13 @@ export const relationships = async ({ id }: Prisma.RelationshipWhereUniqueInput)
   return uniqBy([...lefts, ...rights], JSON.stringify)
 }
 
-export const createRelationship = ({ input }: CreateRelationshipArgs) => {
+export const createRelationship = async ({ input }: CreateRelationshipArgs) => {
+  const leftSide = await db.relationship.findFirst({ where: { leftId: input.leftId, rightId: input.rightId }})
+  const rightSide = await db.relationship.findFirst({ where: { leftId: input.rightId, rightId: input.leftId }})
+  validate(leftSide || rightSide, {
+    acceptance: { in: [true], message: "Relationship already exists"},
+  })
+
   return db.relationship.create({ data: input })
 }
 
