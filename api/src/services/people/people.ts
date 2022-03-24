@@ -51,17 +51,17 @@ const uniqBy = (a, key) => {
   })
 }
 
-export const relationships = async ({ id }: Prisma.RelationshipWhereUniqueInput) => {
-  const lefts = await db.relationship.findMany({ where: { leftId: id }})
-  const rights = await db.relationship.findMany({ where: { rightId: id }})
-  return uniqBy([...lefts, ...rights], JSON.stringify)
+export const relationships = async ({ personId }) => {
+  const lefts = await db.relationship.findMany({ where: { leftId: personId }})
+  const rights = await db.relationship.findMany({ where: { rightId: personId }})
+  return uniqBy(lefts.concat(rights), JSON.stringify)
 }
 
-export const createRelationship = async ({ input }: CreateRelationshipArgs) => {
+export const createRelationship = async ({ input }) => {
   const leftSide = await db.relationship.findFirst({ where: { leftId: input.leftId, rightId: input.rightId }})
   const rightSide = await db.relationship.findFirst({ where: { leftId: input.rightId, rightId: input.leftId }})
-  validate(leftSide || rightSide, {
-    acceptance: { in: [true], message: "Relationship already exists"},
+  validate(!!leftSide || !!rightSide, {
+    acceptance: { in: [false], message: "Relationship already exists"},
   })
 
   return db.relationship.create({ data: input })
