@@ -1,5 +1,4 @@
-import type { RelationshipsQuery } from 'types/graphql'
-import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import type { CellFailureProps } from '@redwoodjs/web'
 import { Link, routes } from '@redwoodjs/router'
 
 
@@ -31,7 +30,7 @@ export const Failure = ({ error }: CellFailureProps) => (
   <div style={{ color: 'red' }}>Error: {error.message}</div>
 )
 
-export const Success = ({ personId, relationships }: CellSuccessProps<RelationshipsQuery>) => {
+export const Success = ({ personId, relationships }) => {
   return (
     <>
       <h2>Relationships</h2>
