@@ -56,7 +56,7 @@ const aggregateRelationships = (id, relationships) => {
   return uniqBy(relationships.map((relationship) => {
     if (relationship.leftId === id) {
       return relationship.right
-    } else {
+    } else if (relationship.rightId === id) {
       return relationship.left
     }
   }), JSON.stringify)
