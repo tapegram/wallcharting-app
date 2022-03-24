@@ -9,19 +9,22 @@
 
 import { Set, Router, Route } from '@redwoodjs/router'
 import PeopleLayout from 'src/layouts/PeopleLayout'
+import ProfilesLayout from 'src/layouts/ProfilesLayout'
 
 const Routes = () => {
   return (
     <Router>
-      <Route path="/force-graph" page={ForceGraphPage} name="forceGraph" />
       <Set wrap={PeopleLayout}>
         <Route path="/people/new" page={PersonNewPersonPage} name="newPerson" />
         <Route path="/people/{id:Int}/edit" page={PersonEditPersonPage} name="editPerson" />
         <Route path="/people/{id:Int}" page={PersonPersonPage} name="person" />
         <Route path="/people" page={PersonPeoplePage} name="people" />
       </Set>
-      <Route path="/profile/{id:Int}" page={ProfilePage} name="profile" />
-      <Route path="/" page={HomePage} name="home" />
+      <Set wrap={ProfilesLayout}>
+        <Route path="/profiles" page={ProfilesPage} name="profiles" />
+        <Route path="/profiles/{id:Int}" page={ProfilePage} name="profile" />
+        <Route path="/" page={HomePage} name="home" />
+      </Set>
       <Route notfound page={NotFoundPage} />
     </Router>
   )
