@@ -53,10 +53,12 @@ export const Success = ({ personId, relationships }) => {
 // grabs the "other" user
 // filters duplicates
 const aggregateRelationships = (id, relationships) => {
-  return uniqBy(relationships.map((relationship) => {
+  return uniqBy(relationships
+    .filter((relationship) => relationship.leftId === id || relationship.rightId === id)
+    .map((relationship) => {
     if (relationship.leftId === id) {
       return relationship.right
-    } else if (relationship.rightId === id) {
+    } else {
       return relationship.left
     }
   }), JSON.stringify)
