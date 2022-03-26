@@ -1,5 +1,6 @@
 import type { CellFailureProps } from '@redwoodjs/web'
-import { Link, routes } from '@redwoodjs/router'
+import { routes } from '@redwoodjs/router'
+import Link from 'src/components/Link/Link'
 
 
 export const QUERY = gql`
@@ -39,7 +40,6 @@ export const Success = ({ personId, relationships }) => {
           return <div key={person.id}>
             <li>
               <Link to={routes.profile({ id: person.id })}
-                className="text-blue-500 hover:text-blue-800"
               >
                 {person.lastName}, {person.firstName}
               </Link>
