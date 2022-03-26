@@ -1,6 +1,7 @@
 import { Graph } from "react-d3-graph";
+import { navigate, routes } from '@redwoodjs/router'
 
-const ForceGraph = ({ nodes, edges}) => {
+const ForceGraph = ({ nodes, edges }) => {
   const state = {
     data: {
       nodes: nodes,
@@ -24,7 +25,7 @@ const ForceGraph = ({ nodes, edges}) => {
   };
 
   const onClickNode = nodeId => {
-    console.log("Click on node: ", nodeId);
+    navigate(routes.profile({ id: nodeId }))
   };
 
   const onDoubleClickNode = nodeId => {
