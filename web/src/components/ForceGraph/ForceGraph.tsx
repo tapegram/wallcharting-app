@@ -9,7 +9,7 @@ const ForceGraph = ({ nodes, edges }) => {
     },
     config: {
       collapsible: false,
-      nodeHighlightBehavior: false,
+      nodeHighlightBehavior: true,
       node: {
         color: "blue",
         size: 250,
@@ -19,7 +19,16 @@ const ForceGraph = ({ nodes, edges }) => {
       },
       link: {
         highlightColor: "lightblue"
-      }
+      },
+      // staticGraph: true,
+      // staticGraphWithDragAndDrop: true,
+      "d3": {
+        "alphaTarget": 0.05,
+        "gravity": -100,
+        "linkLength": 100,
+        "linkStrength": 1,
+        "disableLinkForce": false
+      },
     },
     fontSize: 12
   };
