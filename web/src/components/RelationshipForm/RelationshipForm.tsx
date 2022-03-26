@@ -51,8 +51,8 @@ const RelationshipForm = ({ personId, people }) => {
   }
 
   return (
-    <div>
-      <h3>Add Relationship</h3>
+    <div className="my-4">
+      <h2 className="text-xl">Add Relationship</h2>
       <Form onSubmit={onSubmit}>
         <FormError
           error={error}

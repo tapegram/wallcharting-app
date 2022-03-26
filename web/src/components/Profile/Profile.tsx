@@ -4,16 +4,18 @@ import CreateRelationshipForPersonFormCell from 'src/components/CreateRelationsh
 
 const Profile = ({ profile }) => {
   return (
-    <>
-        <h2>
-          <Link to={routes.profile({ id: profile.id })}>
-            {profile.lastName}, {profile.firstName}
-          </Link>
-        </h2>
-        <div>Created at: {profile.createdAt}</div>
-        <CreateRelationshipForPersonFormCell personId={profile.id} />
-        <RelationshipsCell personId={profile.id} />
-    </>
+    <div className="my-4">
+      <h2 className="text-xl">
+        <Link to={routes.profile({ id: profile.id })}
+          className="text-blue-500 hover:text-blue-800"
+        >
+          {profile.lastName}, {profile.firstName}
+        </Link>
+      </h2>
+      <div>Created at: {profile.createdAt}</div>
+      <CreateRelationshipForPersonFormCell personId={profile.id} />
+      <RelationshipsCell personId={profile.id} />
+    </div>
   )
 }
 

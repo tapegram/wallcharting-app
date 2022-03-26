@@ -5,7 +5,7 @@ const ProfilesPage = () => {
   return (
     <>
       <MetaTags title="Profiles" description="Profiles page" />
-      <h1>ProfilesPage</h1>
+      <h1 className="text-2xl">ProfilesPage</h1>
       <ProfilesCell />
     </>
   )

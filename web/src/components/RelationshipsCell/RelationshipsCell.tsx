@@ -32,20 +32,22 @@ export const Failure = ({ error }: CellFailureProps) => (
 
 export const Success = ({ personId, relationships }) => {
   return (
-    <>
-      <h2>Relationships</h2>
+    <div className="my-5">
+      <h2 className="text-xl">Relationships</h2>
       <ul>
         {aggregateRelationships(personId, relationships).map((person) => {
           return <div key={person.id}>
-            <h3>
-              <Link to={routes.profile({ id: person.id })}>
+            <li>
+              <Link to={routes.profile({ id: person.id })}
+                className="text-blue-500 hover:text-blue-800"
+              >
                 {person.lastName}, {person.firstName}
               </Link>
-            </h3>
+            </li>
           </div>
         })}
       </ul>
-    </>
+    </div >
   )
 }
 
@@ -56,18 +58,18 @@ const aggregateRelationships = (id, relationships) => {
   return uniqBy(relationships
     .filter((relationship) => relationship.leftId === id || relationship.rightId === id)
     .map((relationship) => {
-    if (relationship.leftId === id) {
-      return relationship.right
-    } else {
-      return relationship.left
-    }
-  }), JSON.stringify)
+      if (relationship.leftId === id) {
+        return relationship.right
+      } else {
+        return relationship.left
+      }
+    }), JSON.stringify)
 }
 
 const uniqBy = (a, key) => {
   var seen = {};
-  return a.filter(function(item) {
-      var k = key(item);
-      return seen.hasOwnProperty(k) ? false : (seen[k] = true);
+  return a.filter(function (item) {
+    var k = key(item);
+    return seen.hasOwnProperty(k) ? false : (seen[k] = true);
   })
 }

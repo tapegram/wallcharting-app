@@ -6,7 +6,7 @@ type ProfilesLayoutProps = {
 }
 
 const ProfilesLayout = ({ children }: ProfilesLayoutProps) => {
-  return <div>
+  return <div className="m-4">
     <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
     <header>
       <ul className="flex">
