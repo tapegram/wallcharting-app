@@ -1,5 +1,6 @@
-import { Link, routes } from '@redwoodjs/router'
+import { routes } from '@redwoodjs/router'
 import { Toaster } from '@redwoodjs/web/toast'
+import Link from 'src/components/Link/Link'
 
 type ProfilesLayoutProps = {
   children?: React.ReactNode
@@ -13,7 +14,6 @@ const ProfilesLayout = ({ children }: ProfilesLayoutProps) => {
         <li className="mr-6">
           <Link
             to={routes.people()}
-            className="text-blue-500 hover:text-blue-800"
           >
             People
           </Link>
@@ -21,7 +21,6 @@ const ProfilesLayout = ({ children }: ProfilesLayoutProps) => {
         <li className="mr-6">
           <Link
             to={routes.profiles()}
-            className="text-blue-500 hover:text-blue-800"
           >
             Profiles
           </Link>

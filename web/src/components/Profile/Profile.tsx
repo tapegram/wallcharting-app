@@ -1,14 +1,13 @@
-import { Link, routes } from '@redwoodjs/router'
+import { routes } from '@redwoodjs/router'
 import RelationshipsCell from 'src/components/RelationshipsCell'
 import CreateRelationshipForPersonFormCell from 'src/components/CreateRelationshipForPersonFormCell'
+import Link from 'src/components/Link/Link'
 
 const Profile = ({ profile }) => {
   return (
     <div className="my-4">
       <h2 className="text-xl">
-        <Link to={routes.profile({ id: profile.id })}
-          className="text-blue-500 hover:text-blue-800"
-        >
+        <Link to={routes.profile({ id: profile.id })}>
           {profile.lastName}, {profile.firstName}
         </Link>
       </h2>
