@@ -6,32 +6,30 @@ type ProfilesLayoutProps = {
 }
 
 const ProfilesLayout = ({ children }: ProfilesLayoutProps) => {
-    return <div className="rw-scaffold">
-      <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
-      <header className="rw-header">
-        <h1 className="rw-heading rw-heading-primary">
-        <Link
-          to={routes.people()}
-          className="rw-link"
-        >
-          people
-        </Link>
+  return <div>
+    <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
+    <header>
+      <ul className="flex">
+        <li className="mr-6">
+          <Link
+            to={routes.people()}
+            className="text-blue-500 hover:text-blue-800"
+          >
+            People
+          </Link>
+        </li>
+        <li className="mr-6">
           <Link
             to={routes.profiles()}
-            className="rw-link"
+            className="text-blue-500 hover:text-blue-800"
           >
-            profiles
+            Profiles
           </Link>
-        <Link
-          to={routes.people()}
-          className="rw-link"
-        >
-          people
-        </Link>
-        </h1>
-      </header>
-      <main className="rw-main">{children}</main>
-    </div>
+        </li>
+      </ul>
+    </header>
+    <main>{children}</main>
+  </div>
 }
 
 export default ProfilesLayout
