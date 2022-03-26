@@ -73,10 +73,10 @@ export const Success = ({ personId, relationships }) => {
               </Link>
               <button
                 type="button"
-                className="rw-button rw-button-red"
+                className="flex-shrink-0 border-transparent border-4 text-red-500 hover:text-red-800 text-sm py-1 px-2 rounded"
                 onClick={() => onDeleteClick(relationship.id, relationship.person)}
               >
-                Delete
+                X
               </button>
 
             </li>

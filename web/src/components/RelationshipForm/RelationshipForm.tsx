@@ -1,7 +1,6 @@
 import {
   Form,
   FormError,
-  Label,
   SelectField,
   Submit,
 } from '@redwoodjs/forms'
