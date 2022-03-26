@@ -1,6 +1,7 @@
 import { Graph } from "react-d3-graph";
+import { navigate, routes } from '@redwoodjs/router'
 
-const ForceGraph = ({ nodes, edges}) => {
+const ForceGraph = ({ nodes, edges }) => {
   const state = {
     data: {
       nodes: nodes,
@@ -8,7 +9,7 @@ const ForceGraph = ({ nodes, edges}) => {
     },
     config: {
       collapsible: false,
-      nodeHighlightBehavior: false,
+      nodeHighlightBehavior: true,
       node: {
         color: "blue",
         size: 250,
@@ -18,13 +19,22 @@ const ForceGraph = ({ nodes, edges}) => {
       },
       link: {
         highlightColor: "lightblue"
-      }
+      },
+      // staticGraph: true,
+      // staticGraphWithDragAndDrop: true,
+      "d3": {
+        "alphaTarget": 0.05,
+        "gravity": -100,
+        "linkLength": 100,
+        "linkStrength": 1,
+        "disableLinkForce": false
+      },
     },
     fontSize: 12
   };
 
   const onClickNode = nodeId => {
-    console.log("Click on node: ", nodeId);
+    navigate(routes.profile({ id: nodeId }))
   };
 
   const onDoubleClickNode = nodeId => {
