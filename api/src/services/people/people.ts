@@ -37,7 +37,7 @@ const getEdges = (relationships) => {
   const edges = relationships.map((relationship) => {
     const leftId = Math.min(relationship.left.id, relationship.right.id)
     const rightId = Math.max(relationship.left.id, relationship.right.id)
-    return {leftId, rightId}
+    return { leftId, rightId }
   })
 
   return uniqBy(edges, JSON.stringify)
@@ -45,23 +45,23 @@ const getEdges = (relationships) => {
 
 const uniqBy = (a, key) => {
   var seen = {};
-  return a.filter(function(item) {
-      var k = key(item);
-      return seen.hasOwnProperty(k) ? false : (seen[k] = true);
+  return a.filter(function (item) {
+    var k = key(item);
+    return seen.hasOwnProperty(k) ? false : (seen[k] = true);
   })
 }
 
 export const relationships = async ({ personId }) => {
-  const lefts = await db.relationship.findMany({ where: { leftId: personId }})
-  const rights = await db.relationship.findMany({ where: { rightId: personId }})
+  const lefts = await db.relationship.findMany({ where: { leftId: personId } })
+  const rights = await db.relationship.findMany({ where: { rightId: personId } })
   return uniqBy(lefts.concat(rights), JSON.stringify)
 }
 
 export const createRelationship = async ({ input }) => {
-  const leftSide = await db.relationship.findFirst({ where: { leftId: input.leftId, rightId: input.rightId }})
-  const rightSide = await db.relationship.findFirst({ where: { leftId: input.rightId, rightId: input.leftId }})
+  const leftSide = await db.relationship.findFirst({ where: { leftId: input.leftId, rightId: input.rightId } })
+  const rightSide = await db.relationship.findFirst({ where: { leftId: input.rightId, rightId: input.leftId } })
   validate(!!leftSide || !!rightSide, {
-    acceptance: { in: [false], message: "Relationship already exists"},
+    acceptance: { in: [false], message: "Relationship already exists" },
   })
 
   return db.relationship.create({ data: input })
@@ -126,3 +126,9 @@ export const Relationship = {
   ) => db.relationship.findUnique({ where: { id: root.id } }).right(),
 }
 
+
+export const deleteRelationship = ({ id }) => {
+  return db.relationship.delete({
+    where: { id },
+  })
+}

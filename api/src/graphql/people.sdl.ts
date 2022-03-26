@@ -58,5 +58,6 @@ export const schema = gql`
     updatePerson(id: Int!, input: UpdatePersonInput!): Person! @requireAuth
     deletePerson(id: Int!): Person! @requireAuth
     createRelationship(input: CreateRelationshipInput!): Relationship! @requireAuth
+    deleteRelationship(id: Int!): Relationship! @requireAuth
   }
 `
