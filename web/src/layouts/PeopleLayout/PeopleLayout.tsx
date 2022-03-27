@@ -12,8 +12,14 @@ const PeopleLayout = ({ children }: PersonLayoutProps) => {
       <header className="rw-header">
         <h1 className="rw-heading rw-heading-primary">
           <Link
+            to={routes.home()}
+            className="rw-link mx-2"
+          >
+            Home
+          </Link>
+          <Link
             to={routes.people()}
-            className="rw-link"
+            className="rw-link mx-2"
           >
             People
           </Link>

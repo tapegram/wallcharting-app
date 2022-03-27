@@ -20,11 +20,9 @@ const ForceGraph = ({ nodes, edges }) => {
       link: {
         highlightColor: "lightblue"
       },
-      // staticGraph: true,
-      // staticGraphWithDragAndDrop: true,
       "d3": {
         "alphaTarget": 0.05,
-        "gravity": -100,
+        "gravity": -150,
         "linkLength": 100,
         "linkStrength": 1,
         "disableLinkForce": false
@@ -37,16 +35,11 @@ const ForceGraph = ({ nodes, edges }) => {
     navigate(routes.profile({ id: nodeId }))
   };
 
-  const onDoubleClickNode = nodeId => {
-    console.log("DoubleClick on node: ", nodeId);
-  };
-
   return <Graph
     id="ontology-graph"
     data={state.data}
     config={state.config}
     onClickNode={onClickNode}
-    onDoubleClickNode={onDoubleClickNode}
   />
 }
 
