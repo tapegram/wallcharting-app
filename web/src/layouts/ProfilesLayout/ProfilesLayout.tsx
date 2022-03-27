@@ -13,6 +13,13 @@ const ProfilesLayout = ({ children }: ProfilesLayoutProps) => {
       <ul className="flex">
         <li className="mr-6">
           <Link
+            to={routes.home()}
+          >
+            Home
+          </Link>
+        </li>
+        <li className="mr-6">
+          <Link
             to={routes.people()}
           >
             People
