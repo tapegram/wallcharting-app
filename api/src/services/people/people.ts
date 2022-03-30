@@ -23,11 +23,11 @@ const getNodes = (relationships) => {
   relationships.forEach((relationship) => {
     nodes.push({
       id: relationship.left.id,
-      label: relationship.left.firstName,
+      label: relationship.left.lastName + ', ' + relationship.left.firstName,
     })
     nodes.push({
       id: relationship.right.id,
-      label: relationship.right.firstName,
+      label: relationship.right.lastName + ', ' + relationship.right.firstName,
     })
   })
   return uniqBy(nodes, JSON.stringify)
