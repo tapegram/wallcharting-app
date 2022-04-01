@@ -6,7 +6,7 @@ type Props = {
 
 const ProfilePanel = ({ id }) => {
   return (
-    <div className="h-1/3 w-1/3">
+    <div className="h-1/3 w-1/3 float-right">
       <ProfileCell id={id} />
     </div>
   )

@@ -15,8 +15,8 @@ const ForceGraph = ({ nodes, edges }) => {
       })),
     },
     config: {
-      height: 800,
-      width: 800,
+      height: 400,
+      width: 400,
       automaticRearrangeAfterDropNode: true,
       freezeAllDragEvents: false,
       staticGraph: false,
@@ -53,12 +53,14 @@ const ForceGraph = ({ nodes, edges }) => {
   return (
     <>
       <p>{showPanel ? <ProfilePanel id={selectedPerson} /> : <></>}</p>
-      <Graph
-        id="ontology-graph"
-        data={state.data}
-        config={state.config}
-        onClickNode={onClickNode}
-      />
+      <div className="w-1/3">
+        <Graph
+          id="ontology-graph"
+          data={state.data}
+          config={state.config}
+          onClickNode={onClickNode}
+        />
+      </div>
     </>
   )
 }
