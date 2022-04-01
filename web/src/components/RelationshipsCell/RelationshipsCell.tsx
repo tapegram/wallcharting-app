@@ -3,7 +3,7 @@ import { routes } from '@redwoodjs/router'
 import Link from 'src/components/Link/Link'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
-
+import { QUERY as ForceGraphQuery } from 'src/components/ForceGraphCell'
 
 export const QUERY = gql`
   query RelationshipsQuery($personId: Int!) {
@@ -50,7 +50,10 @@ export const Success = ({ personId, relationships }) => {
     onError: (error) => {
       toast.error(error.message)
     },
-    refetchQueries: [{ query: QUERY, variables: { personId } }],
+    refetchQueries: [
+      { query: QUERY, variables: { personId } },
+      { query: ForceGraphQuery },
+    ],
   })
 
   const onDeleteClick = (id, person) => {
