@@ -45,16 +45,29 @@ const ForceGraph = ({ nodes, edges }) => {
     fontSize: 12,
   }
 
-  React.useEffect(() => {
-    function handleResize() {
+  function debounce(fn, ms) {
+    let timer
+    return _ => {
+      clearTimeout(timer)
+      timer = setTimeout(_ => {
+        timer = null
+        fn.apply(this, arguments)
+      }, ms)
+    };
+  }
+
+  useEffect(() => {
+    const debouncedHandleResize = debounce(function handleResize() {
       setDimensions({
         height: window.innerHeight,
         width: window.innerWidth
       })
-    }
-    window.addEventListener('resize', handleResize)
+    }, 50)
+
+    window.addEventListener('resize', debouncedHandleResize)
+
     return _ => {
-      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('resize', debouncedHandleResize)
     }
   })
 
