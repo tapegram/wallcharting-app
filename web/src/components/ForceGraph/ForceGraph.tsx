@@ -1,11 +1,12 @@
 import { Graph } from 'react-d3-graph'
 import { navigate, routes } from '@redwoodjs/router'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ProfilePanel from '../ProfilePanel/ProfilePanel'
 
 const ForceGraph = ({ nodes, edges }) => {
   const [selectedPerson, setSelectedPerson] = useState(0)
   const [showPanel, setShowPanel] = useState(false)
+  const [dimensions, setDimensions] = useState({})
   const state = {
     data: {
       nodes: nodes,
@@ -15,8 +16,8 @@ const ForceGraph = ({ nodes, edges }) => {
       })),
     },
     config: {
-      height: 400,
-      width: 400,
+      height: window.innerHeight,
+      width: window.innerWidth,
       automaticRearrangeAfterDropNode: true,
       freezeAllDragEvents: false,
       staticGraph: false,
@@ -43,6 +44,19 @@ const ForceGraph = ({ nodes, edges }) => {
     },
     fontSize: 12,
   }
+
+  React.useEffect(() => {
+    function handleResize() {
+      setDimensions({
+        height: window.innerHeight,
+        width: window.innerWidth
+      })
+    }
+    window.addEventListener('resize', handleResize)
+    return _ => {
+      window.removeEventListener('resize', handleResize)
+    }
+  })
 
   const onClickNode = (nodeId) => {
     // navigate(routes.profile({ id: nodeId }))
