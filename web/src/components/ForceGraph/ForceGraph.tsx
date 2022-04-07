@@ -66,6 +66,7 @@ const ForceGraph = ({ nodes, edges }) => {
 
     window.addEventListener('resize', debouncedHandleResize)
 
+    {/* TODO: fix possible memory leak with adding new event listeners on each screen resize */}
     return _ => {
       window.removeEventListener('resize', debouncedHandleResize)
     }
