@@ -12,6 +12,7 @@ const ForceGraph = ({ nodes, edges }) => {
       links: edges.map((edge) => ({
         source: edge.leftId,
         target: edge.rightId,
+        label: edge.category,
       })),
     },
     config: {
@@ -32,6 +33,8 @@ const ForceGraph = ({ nodes, edges }) => {
       },
       link: {
         highlightColor: 'lightblue',
+        labelProperty: 'label',
+        renderLabel: true,
       },
       d3: {
         alphaTarget: 0.05,

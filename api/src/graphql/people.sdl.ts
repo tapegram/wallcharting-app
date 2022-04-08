@@ -36,6 +36,7 @@ export const schema = gql`
   type Edge {
     leftId: Int!
     rightId: Int!
+    category: String!
   }
 
   input CreatePersonInput {
@@ -51,6 +52,7 @@ export const schema = gql`
   input CreateRelationshipInput {
     leftId: Int!
     rightId: Int!
+    category: String!
   }
 
   type Mutation {

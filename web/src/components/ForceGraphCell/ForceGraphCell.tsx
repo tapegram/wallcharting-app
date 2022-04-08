@@ -11,6 +11,7 @@ export const QUERY = gql`
       edges {
         leftId
         rightId
+        category
       }
     }
   }
