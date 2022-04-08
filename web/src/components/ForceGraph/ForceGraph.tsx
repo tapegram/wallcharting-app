@@ -1,11 +1,12 @@
 import { Graph } from 'react-d3-graph'
 import { navigate, routes } from '@redwoodjs/router'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ProfilePanel from '../ProfilePanel/ProfilePanel'
 
 const ForceGraph = ({ nodes, edges }) => {
   const [selectedPerson, setSelectedPerson] = useState(0)
   const [showPanel, setShowPanel] = useState(false)
+  const [dimensions, setDimensions] = useState({})
   const state = {
     data: {
       nodes: nodes,
@@ -16,8 +17,8 @@ const ForceGraph = ({ nodes, edges }) => {
       })),
     },
     config: {
-      height: 400,
-      width: 400,
+      height: window.innerHeight,
+      width: window.innerWidth,
       automaticRearrangeAfterDropNode: true,
       freezeAllDragEvents: false,
       staticGraph: false,
@@ -46,6 +47,33 @@ const ForceGraph = ({ nodes, edges }) => {
     },
     fontSize: 12,
   }
+
+  function debounce(fn, ms) {
+    let timer
+    return _ => {
+      clearTimeout(timer)
+      timer = setTimeout(_ => {
+        timer = null
+        fn.apply(this, arguments)
+      }, ms)
+    };
+  }
+
+  useEffect(() => {
+    const debouncedHandleResize = debounce(function handleResize() {
+      setDimensions({
+        height: window.innerHeight,
+        width: window.innerWidth
+      })
+    }, 50)
+
+    window.addEventListener('resize', debouncedHandleResize)
+
+    {/* TODO: fix possible memory leak with adding new event listeners on each screen resize */}
+    return _ => {
+      window.removeEventListener('resize', debouncedHandleResize)
+    }
+  })
 
   const onClickNode = (nodeId) => {
     // navigate(routes.profile({ id: nodeId }))
