@@ -51,6 +51,7 @@ export const schema = gql`
   input CreateRelationshipInput {
     leftId: Int!
     rightId: Int!
+    category: String!
   }
 
   type Mutation {
