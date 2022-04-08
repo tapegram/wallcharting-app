@@ -9,6 +9,12 @@ import { toast } from '@redwoodjs/web/toast'
 import { QUERY as RelationshipsQuery } from 'src/components/RelationshipsCell'
 import { QUERY as ForceGraphQuery } from 'src/components/ForceGraphCell'
 
+const categories = [
+  'friends',
+  'church',
+  'work'
+]
+
 const CREATE = gql`
   mutation CreateRelationshipMutation($input: CreateRelationshipInput!) {
     createRelationship(input: $input) {
@@ -47,7 +53,8 @@ const RelationshipForm = ({ personId, people }) => {
       variables: {
         input: {
           leftId: personId,
-          rightId: input.person
+          rightId: input.person,
+          category: input.category,
         }
       }
     })
@@ -55,11 +62,11 @@ const RelationshipForm = ({ personId, people }) => {
 
   return (
     <div className="my-4">
-      <h2 className="text-xl">Add Relationship</h2>
       <Form onSubmit={onSubmit}>
         <FormError
           error={error}
         />
+        <h2 className="text-xl">Add Relationship</h2>
         <div className="inline-block relative w-64">
           <SelectField
             name="person"
@@ -70,6 +77,25 @@ const RelationshipForm = ({ personId, people }) => {
             {people.map((person) => (
               <option key={person.id} value={person.id}>
                 {person.lastName}, {person.firstName}
+              </option>
+
+            ))}
+          </SelectField>
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+          </div>
+        </div>
+        <h2 className="text-xl">Add Category of Relationship</h2>
+        <div className="inline-block relative w-64">
+          <SelectField
+            name="category"
+            validation={{ required: true, valueAsNumber: false }}
+            className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+
+            <option value="" disabled selected>Select a category</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                  {category}
               </option>
 
             ))}

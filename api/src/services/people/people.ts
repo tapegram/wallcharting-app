@@ -37,7 +37,7 @@ const getEdges = (relationships) => {
   const edges = relationships.map((relationship) => {
     const leftId = Math.min(relationship.left.id, relationship.right.id)
     const rightId = Math.max(relationship.left.id, relationship.right.id)
-    return { leftId, rightId }
+    return { leftId, rightId, category: relationship.category }
   })
 
   return uniqBy(edges, JSON.stringify)
