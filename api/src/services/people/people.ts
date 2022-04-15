@@ -9,6 +9,7 @@ export const relationshipsGraph = async () => {
     include: {
       left: true,
       right: true,
+      category: true,
     },
   })
 
@@ -37,7 +38,7 @@ const getEdges = (relationships) => {
   const edges = relationships.map((relationship) => {
     const leftId = Math.min(relationship.left.id, relationship.right.id)
     const rightId = Math.max(relationship.left.id, relationship.right.id)
-    return { leftId, rightId, category: relationship.category }
+    return { leftId, rightId, category: relationship.category.name }
   })
 
   return uniqBy(edges, JSON.stringify)
@@ -63,9 +64,13 @@ export const createRelationship = async ({ input }) => {
   validate(!!leftSide || !!rightSide, {
     acceptance: { in: [false], message: "Relationship already exists" },
   })
+  const category = await db.relationshipCategory.findFirst({ where: { name: input.category } })
+  const realInput = toCreateRelationshipInput(input)
 
-  return db.relationship.create({ data: input })
+  return db.relationship.create({ data: { categoryId: category.id, ...realInput } })
 }
+
+export const toCreateRelationshipInput = ({ category, ...rest }) => rest
 
 export const people = () => {
   return db.person.findMany()
