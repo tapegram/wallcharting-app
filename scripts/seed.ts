@@ -18,6 +18,14 @@ export default async () => {
       // { name: 'jackie', email: 'jackie@example.com' },
       // { name: 'bob', email: 'bob@example.com' },
     ]
+    const categoryRelationships: Prisma.RelationshipCategoryCreateArgs['data'][] = [
+      // To try this example data with the UserExample model in schema.prisma,
+      // uncomment the lines below and run 'yarn rw prisma migrate dev'
+      //
+      { name: 'church'},
+      { name: 'work'},
+      { name: 'friend'},
+    ]
     console.log(
       "\nUsing the default './scripts/seed.{js,ts}' template\nEdit the file to add seed data\n"
     )
@@ -28,8 +36,8 @@ export default async () => {
       //
       // Change to match your data model and seeding needs
       //
-      data.map(async (data: Prisma.UserExampleCreateArgs['data']) => {
-        const record = await db.userExample.create({ data })
+      categoryRelationships.map(async (categoryRelationship: Prisma.RelationshipCategoryCreateArgs['data']) => {
+        const record = await db.relationshipCategory.create({ data: categoryRelationship })
         console.log(record)
       })
     )
