@@ -25,7 +25,6 @@ const ForceGraph = ({ nodes, edges }) => {
       collapsible: false,
       nodeHighlightBehavior: true,
       node: {
-        color: 'blue',
         size: 400,
         fontSize: 12,
         highlightStrokeColor: 'blue',
