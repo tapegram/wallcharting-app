@@ -31,6 +31,7 @@ export const schema = gql`
   type Node {
     id: Int!
     label: String!
+    color: String!
   }
 
   type Edge {
@@ -59,7 +60,8 @@ export const schema = gql`
     createPerson(input: CreatePersonInput!): Person! @requireAuth
     updatePerson(id: Int!, input: UpdatePersonInput!): Person! @requireAuth
     deletePerson(id: Int!): Person! @requireAuth
-    createRelationship(input: CreateRelationshipInput!): Relationship! @requireAuth
+    createRelationship(input: CreateRelationshipInput!): Relationship!
+      @requireAuth
     deleteRelationship(id: Int!): Relationship! @requireAuth
   }
 `

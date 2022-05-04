@@ -18,16 +18,27 @@ export const relationshipsGraph = async () => {
 
   return { nodes, edges }
 }
-
+const getCountEdges = (nodeId, relationships) => {
+  return relationships.reduce((cur, relationship) => {
+    const left = relationship.left.id === nodeId ? 1 : 0
+    const right = relationship.right.id === nodeId ? 1 : 0
+    return cur + left + right
+  }, 0)
+}
+const getColor = (edgeNo) => {
+  return edgeNo > 2 ? 'red' : 'blue'
+}
 const getNodes = (relationships) => {
   const nodes = []
   relationships.forEach((relationship) => {
     nodes.push({
       id: relationship.left.id,
+      color: getColor(getCountEdges(relationship.left.id, relationships)),
       label: relationship.left.lastName + ', ' + relationship.left.firstName,
     })
     nodes.push({
       id: relationship.right.id,
+      color: getColor(getCountEdges(relationship.right.id, relationships)),
       label: relationship.right.lastName + ', ' + relationship.right.firstName,
     })
   })
@@ -45,29 +56,39 @@ const getEdges = (relationships) => {
 }
 
 const uniqBy = (a, key) => {
-  var seen = {};
+  const seen = {}
   return a.filter(function (item) {
-    var k = key(item);
-    return seen.hasOwnProperty(k) ? false : (seen[k] = true);
+    const k = key(item)
+    return seen.hasOwnProperty(k) ? false : (seen[k] = true)
   })
 }
 
 export const relationships = async ({ personId }) => {
   const lefts = await db.relationship.findMany({ where: { leftId: personId } })
-  const rights = await db.relationship.findMany({ where: { rightId: personId } })
+  const rights = await db.relationship.findMany({
+    where: { rightId: personId },
+  })
   return uniqBy(lefts.concat(rights), JSON.stringify)
 }
 
 export const createRelationship = async ({ input }) => {
-  const leftSide = await db.relationship.findFirst({ where: { leftId: input.leftId, rightId: input.rightId } })
-  const rightSide = await db.relationship.findFirst({ where: { leftId: input.rightId, rightId: input.leftId } })
-  validate(!!leftSide || !!rightSide, {
-    acceptance: { in: [false], message: "Relationship already exists" },
+  const leftSide = await db.relationship.findFirst({
+    where: { leftId: input.leftId, rightId: input.rightId },
   })
-  const category = await db.relationshipCategory.findFirst({ where: { name: input.category } })
+  const rightSide = await db.relationship.findFirst({
+    where: { leftId: input.rightId, rightId: input.leftId },
+  })
+  validate(!!leftSide || !!rightSide, {
+    acceptance: { in: [false], message: 'Relationship already exists' },
+  })
+  const category = await db.relationshipCategory.findFirst({
+    where: { name: input.category },
+  })
   const realInput = toCreateRelationshipInput(input)
 
-  return db.relationship.create({ data: { categoryId: category.id, ...realInput } })
+  return db.relationship.create({
+    data: { categoryId: category.id, ...realInput },
+  })
 }
 
 export const toCreateRelationshipInput = ({ category, ...rest }) => rest
@@ -121,16 +142,11 @@ export const Person = {
 }
 
 export const Relationship = {
-  left: (
-    _obj,
-    { root }: ResolverArgs<ReturnType<typeof person>>
-  ) => db.relationship.findUnique({ where: { id: root.id } }).left(),
-  right: (
-    _obj,
-    { root }: ResolverArgs<ReturnType<typeof person>>
-  ) => db.relationship.findUnique({ where: { id: root.id } }).right(),
+  left: (_obj, { root }: ResolverArgs<ReturnType<typeof person>>) =>
+    db.relationship.findUnique({ where: { id: root.id } }).left(),
+  right: (_obj, { root }: ResolverArgs<ReturnType<typeof person>>) =>
+    db.relationship.findUnique({ where: { id: root.id } }).right(),
 }
-
 
 export const deleteRelationship = ({ id }) => {
   return db.relationship.delete({

@@ -7,6 +7,7 @@ export const QUERY = gql`
       nodes {
         id
         label
+        color
       }
       edges {
         leftId
@@ -25,5 +26,10 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = ({ relationshipsGraph }) => {
-  return <ForceGraph nodes={relationshipsGraph.nodes} edges={relationshipsGraph.edges}/>
+  return (
+    <ForceGraph
+      nodes={relationshipsGraph.nodes}
+      edges={relationshipsGraph.edges}
+    />
+  )
 }
