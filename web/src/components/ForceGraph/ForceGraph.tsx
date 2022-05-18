@@ -1,8 +1,6 @@
 import { Graph } from 'react-d3-graph'
-import { navigate, routes } from '@redwoodjs/router'
 import { useState } from 'react'
 import ProfilePanel from '../ProfilePanel/ProfilePanel'
-
 const ForceGraph = ({ nodes, edges }) => {
   const [selectedPerson, setSelectedPerson] = useState(0)
   const [showPanel, setShowPanel] = useState(false)
@@ -25,7 +23,6 @@ const ForceGraph = ({ nodes, edges }) => {
       collapsible: false,
       nodeHighlightBehavior: true,
       node: {
-        size: 400,
         fontSize: 12,
         highlightStrokeColor: 'blue',
         labelProperty: 'label',

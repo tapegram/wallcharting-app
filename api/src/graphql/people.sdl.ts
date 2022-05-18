@@ -32,6 +32,7 @@ export const schema = gql`
     id: Int!
     label: String!
     color: String!
+    size: Int!
   }
 
   type Edge {

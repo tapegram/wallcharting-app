@@ -20,6 +20,9 @@ export const relationshipsGraph = async () => {
 }
 const getCountEdges = (nodeId, relationships) => {
   return relationships.reduce((cur, relationship) => {
+    if (relationship.left.id === relationship.right.id) {
+      return cur
+    }
     const left = relationship.left.id === nodeId ? 1 : 0
     const right = relationship.right.id === nodeId ? 1 : 0
     return cur + left + right
@@ -28,29 +31,40 @@ const getCountEdges = (nodeId, relationships) => {
 const getColor = (edgeNo) => {
   return edgeNo > 2 ? 'red' : 'blue'
 }
+const getSize = (edgeNo) => {
+  return edgeNo * 200 + 100
+}
 const getNodes = (relationships) => {
   const nodes = []
   relationships.forEach((relationship) => {
+    const leftEdgesCount = getCountEdges(relationship.left.id, relationships)
     nodes.push({
       id: relationship.left.id,
-      color: getColor(getCountEdges(relationship.left.id, relationships)),
+      color: getColor(leftEdgesCount),
       label: relationship.left.lastName + ', ' + relationship.left.firstName,
+      size: getSize(leftEdgesCount),
     })
+    const rightEdgesCount = getCountEdges(relationship.right.id, relationships)
     nodes.push({
       id: relationship.right.id,
-      color: getColor(getCountEdges(relationship.right.id, relationships)),
+      color: getColor(rightEdgesCount),
       label: relationship.right.lastName + ', ' + relationship.right.firstName,
+      size: getSize(rightEdgesCount),
     })
   })
   return uniqBy(nodes, JSON.stringify)
 }
 
 const getEdges = (relationships) => {
-  const edges = relationships.map((relationship) => {
-    const leftId = Math.min(relationship.left.id, relationship.right.id)
-    const rightId = Math.max(relationship.left.id, relationship.right.id)
-    return { leftId, rightId, category: relationship.category.name }
-  })
+  const edges = relationships
+    .map((relationship) => {
+      const leftId = Math.min(relationship.left.id, relationship.right.id)
+      const rightId = Math.max(relationship.left.id, relationship.right.id)
+      return { leftId, rightId, category: relationship.category.name }
+    })
+    .filter((edge) => {
+      return edge.leftId !== edge.rightId
+    })
 
   return uniqBy(edges, JSON.stringify)
 }
