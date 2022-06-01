@@ -10,7 +10,7 @@ import { QUERY as RelationshipsQuery } from 'src/components/RelationshipsCell'
 import { QUERY as ForceGraphQuery } from 'src/components/ForceGraphCell'
 
 const categories = [
-  'friends',
+  'friend',
   'church',
   'work'
 ]
