@@ -28,11 +28,11 @@ const getCountEdges = (nodeId, relationships) => {
     return cur + left + right
   }, 0)
 }
-const getColor = (edgeNo) => {
+export const getColor = (edgeNo) => {
   return edgeNo > 2 ? 'red' : 'blue'
 }
-const getSize = (edgeNo) => {
-  return edgeNo * 200 + 100
+export const getSize = (edgeNo) => {
+  return Math.min(edgeNo * 200 + 100, 1000)
 }
 const getNodes = (relationships) => {
   const nodes = []
